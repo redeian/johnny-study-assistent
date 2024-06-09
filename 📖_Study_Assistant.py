@@ -68,8 +68,8 @@ def regen(answer, detail):
 
 # ------------------------------ Page Logic --------------------------------
 
-logo = Image.open("./static/logo_2.png")
-st.set_page_config(page_title = "Memora - Study Wise", page_icon = logo, layout="wide")
+logo = Image.open("./static/johnny.jpg")
+st.set_page_config(page_title = "Johnny - Study Assistant", page_icon = logo, layout="wide")
     
 col1, col2= st.columns([0.5, 2])
 col1.image(logo, output_format="PNG", clamp=True, use_column_width=True)
@@ -77,11 +77,11 @@ col1.image(logo, output_format="PNG", clamp=True, use_column_width=True)
 chat3_5, chat4 = pr.initialise_llms_with_key(st.secrets["openai_api_key"])
 
 with col2:
-    st.title("Memora - Study Wise")
+    st.title("UTCC Johnny")
     st.subheader("Study Assistant")
     st.markdown("##### Upload your lecture notes/slides and ask your virtual professor any questions.")
-    st.markdown("""Use this tool to allow handwritten study materials to be analysed: <a href = "https://tools.pdf24.org/en/ocr-pdf">PDF OCR</a>""", unsafe_allow_html = True, help = "This tool is not affiliated with Memora")
-
+    # st.markdown("""Use this tool to allow handwritten study materials to be analysed: <a href = "https://tools.pdf24.org/en/ocr-pdf">PDF OCR</a>""", unsafe_allow_html = True, help = "This tool is not affiliated with Memora")
+    
 uploaded_files = st.file_uploader("Upload Study Materials", type = ["pdf","txt","docx"], accept_multiple_files = True, on_change = clear_cache, key = "assistant_uploads")
 st.session_state.upld_filename = [doc.name for doc in uploaded_files]
 if 'upld_filename' in st.session_state and st.session_state.upld_filename is not None and st.session_state.upld_filename != []:
@@ -97,9 +97,9 @@ with st.sidebar:
     st.divider()
     st.caption("Special Features:")
     huberman = st.checkbox("Enable 'Chat with Dr. Huberman'", value = False, key = "huberman", help = "Enabling this will load the transcripts of 90 episodes of the Huberman Lab Podcast so you can 'ask Dr. Huberman questions'.")
-    # vid = st.checkbox("LoFi music", value = False, key = "vid")
-    # if vid:
-    #     st.video("https://youtu.be/jfKfPfyJRdk")
+    vid = st.checkbox("LoFi music", value = False, key = "vid")
+    if vid:
+        st.video("https://youtu.be/jfKfPfyJRdk")
 
 if uploaded_files or huberman:
     if huberman:
@@ -193,12 +193,11 @@ text-align: left; /* you can replace 'left' with 'center' or 'right' if you want
 <div class="footer">
 <p>Disclaimer: Please ensure you have permission from the copyright owner when uploading any copyrighted material</p>
 <br 'style= top:3px;'>
-<a style='display: inline; text-align: left;' href="https://forms.gle/gj2cuH2cS4i9UMjp8" target="_blank">Report any bugs/errors here 🐞</a>
+<a style='display: inline; text-align: left;' href="https://forms.office.com/r/Wg8nFccgii" target="_blank">Feedback or Bug report 🐞</a>
 <p>
 Developed by 
-<a style='display: inline; text-align: left;' href="https://www.linkedin.com/in/tg120/" target="_blank">Tejas Gorla</a> <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="Linkedin" height= "11"/>
+<a style='display: inline; text-align: left;' href="https://www.chatchaiwang.com" target="_blank">Chatchai Wangwiwattana</a> <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="Linkedin" height= "11"/>
 <br 'style= top:3px;'>
-<a style='display: inline; text-align: left;' href="https://www.buymeacoffee.com/holonuke" target="_blank">Buy me a snack! 🍕</a>
 </p>
 </div>
 
