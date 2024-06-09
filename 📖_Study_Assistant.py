@@ -122,8 +122,9 @@ try:
         filenames_slt.write(f"Current Files: {st.session_state.docstore['filenames']}")
         docstore = st.session_state.docstore["docstore"]
         question = st.text_area("What would you like to know?", key = "question", max_chars = 1000, height = 100, placeholder = "You can ask me anything about the subject/module you have uploaded.\ne.g. 'Explain equation (*)' or 'What is the definition of (*)?' or even questions from past papers/problem sets.")
+        submit_btn = st.button("Ask Johnny", key = "submit", type = "primary")
         answer_box = st.empty()
-        if question:
+        if question or submit_btn:
             with st.spinner("Thinking..."):
                 response = answer_cache(_docstore = docstore, question = question)
             answer: str = response["result"]
@@ -132,20 +133,23 @@ try:
             with answer_box:
                 st.write("Answer: ", answer)
                 # print(answer)
+            
             with st.expander("View sources used to generate this answer"):
                 source_box = st.empty()
-            regen_slider = st.empty()
-            regen_button_slt = st.empty()
-            detail = regen_slider.slider("Level of Detail:", min_value = 1, max_value = 10, value = 1, step = 1, key = "detail_level")
-            regen_button = regen_button_slt.button("Increase Answer Detail", key = "regen", type = "primary")
-            source_box.text_area(label = "sources", value = sources, height=500, label_visibility = "hidden", key = "sources")
-            if regen_button:
-                with st.spinner("Thinking..."):
-                    new_answer = regen(answer, detail)
-                with answer_box:
-                    st.write("Answer:", new_answer)
-                if new_answer:
-                    source_box.text_area(label = "sources",value = sources, disabled = True, height = 500, label_visibility = "hidden", key = "sources_")
+                
+            with st.expander("Advance"):
+                regen_slider = st.empty()
+                regen_button_slt = st.empty()
+                detail = regen_slider.slider("Level of Detail:", min_value = 1, max_value = 10, value = 1, step = 1, key = "detail_level")
+                regen_button = regen_button_slt.button("Increase Answer Detail", key = "regen", type = "primary")
+                source_box.text_area(label = "sources", value = sources, height=500, label_visibility = "hidden", key = "sources")
+                if regen_button:
+                    with st.spinner("Thinking..."):
+                        new_answer = regen(answer, detail)
+                    with answer_box:
+                        st.write("Answer:", new_answer)
+                    if new_answer:
+                        source_box.text_area(label = "sources",value = sources, disabled = True, height = 500, label_visibility = "hidden", key = "sources_")
 except:
     pass
 

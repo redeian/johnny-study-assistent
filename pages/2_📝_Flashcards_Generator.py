@@ -97,8 +97,8 @@ def format_output(input_file: str) -> dict:
 
 # ------------------------------ Page Logic --------------------------------
 
-logo = Image.open("./static/logo_2.png")
-st.set_page_config(page_title = "Memora - Study Wise", page_icon = logo, layout="wide")
+logo = Image.open("./static/johnny.jpg")
+st.set_page_config(page_title = "Johnny - Study Assistant", page_icon = logo, layout="wide")
 
 chat3_5, chat4 = pr.initialise_llms_with_key(st.secrets["openai_api_key"])
 
@@ -112,11 +112,10 @@ col1, col2= st.columns([0.5, 2])
 col1.image(logo, output_format="PNG", clamp=True, use_column_width=True)
 
 with col2:
-    st.title("Memora - Study Wise")
+    st.title("Johnny - Study Assistant")
     st.subheader("Flashcards Generator")
     st.markdown("##### Upload your lecture notes and generate Q&A flashcards.")
     st.markdown("###### You can study the flashcards on the 'Test Yourself' page or if you prefer Anki, you can choose the 'Format for Anki' option to download a file is formatted to be easily imported into Anki.")
-    st.markdown("""Use this tool to allow handwritten study materials to be analysed: <a href = "https://tools.pdf24.org/en/ocr-pdf">PDF OCR</a>""", unsafe_allow_html = True, help = "If the tool says 0 words recognised, ignore this as it has still worked.")
 
 uploaded_files = st.file_uploader("Upload Study Materials", type = ["pdf","txt","docx"], accept_multiple_files=True, on_change = clear_cache, key = "gen_uploads")
 
@@ -187,55 +186,3 @@ st.divider()
 st.caption("*If something stops working, refresh the page twice and try again.")
 
 # ------------------------------ FOOTER ------------------------------ #
-
-ft = """
-<style>
-a:link , a:visited{
-color: ##40E0D0;  /* theme's text color hex code at 75 percent brightness*/
-background-color: transparent;
-text-decoration: none;
-}
-
-a:hover,  a:active {
-color: #81BE83; /* theme's primary color*/
-background-color: transparent;
-text-decoration: underline;
-}
-
-#page-container {
-  position: relative;
-  min-height: 1vh;
-}
-
-footer{
-    visibility:hidden;
-}
-
-.footer {
-position: relative-bottom;
-left: 0;
-bottom: 0;
-width: 100%;
-background-color: transparent;
-color: #FFFFF; /* theme's text color hex code at 50 percent brightness*/
-text-align: left; /* you can replace 'left' with 'center' or 'right' if you want*/
-}
-</style>
-
-<div id="page-container">
-
-<div class="footer">
-<p>Disclaimer: Please ensure you have permission from the copyright owner when uploading any copyrighted material</p>
-<br 'style= top:3px;'>
-<a style='display: inline; text-align: left;' href="https://forms.gle/gj2cuH2cS4i9UMjp8" target="_blank">Report any bugs/errors here 🐞</a>
-<p>
-Developed by 
-<a style='display: inline; text-align: left;' href="https://www.linkedin.com/in/tg120/" target="_blank">Tejas Gorla</a> <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="Linkedin" height= "11"/>
-<br 'style= top:3px;'>
-<a style='display: inline; text-align: left;' href="https://www.buymeacoffee.com/holonuke" target="_blank">Buy me a snack! 🍕</a>
-</p>
-</div>
-
-</div>
-"""
-st.write(ft, unsafe_allow_html=True)
