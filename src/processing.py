@@ -13,7 +13,7 @@ REQ_TIMEOUT = 200
 def initialise_llms():
     from langchain.chat_models import ChatOpenAI
     load_dotenv()
-    chat3_5 = ChatOpenAI(temperature = 0, model_name = "gpt-3.5-turbo", request_timeout = REQ_TIMEOUT)
+    chat3_5 = ChatOpenAI(temperature = 0, model_name = "gpt-4o-mini", request_timeout = REQ_TIMEOUT)
     chat4 = ChatOpenAI(temperature = 0, model_name = "gpt-4o", request_timeout = REQ_TIMEOUT)
     chat3_5.openai_api_key = os.getenv("OPENAI_API_KEY")
     chat4.openai_api_key = os.getenv("OPENAI_API_KEY")
@@ -22,7 +22,7 @@ def initialise_llms():
 def initialise_llms_with_key(api_key: str):
     from langchain.chat_models import ChatOpenAI
     load_dotenv()
-    chat3_5 = ChatOpenAI(temperature = 0, model_name = "gpt-3.5-turbo", openai_api_key = api_key, request_timeout = REQ_TIMEOUT)
+    chat3_5 = ChatOpenAI(temperature = 0, model_name = "gpt-4o-mini", openai_api_key = api_key, request_timeout = REQ_TIMEOUT)
     chat4 = ChatOpenAI(temperature = 0, model_name = "gpt-4o", openai_api_key = api_key, request_timeout = REQ_TIMEOUT)
     return chat3_5, chat4
 

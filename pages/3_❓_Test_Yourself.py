@@ -120,7 +120,7 @@ if uploaded:
     lines = input_file.splitlines()
     auth = bool(lines[-1] == auth_line)
     if not auth:
-        st.warning("The file you have uploaded was not generated using Johnny - Study Assistant"). Please upload a valid file.")
+        st.warning("The file you have uploaded was not generated using Johnny - Study Assistant")
         st.stop()
     else:
         qa_dict = format_input(input_file)
