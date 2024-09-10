@@ -40,11 +40,11 @@ def create_docstore(_chunks):
     docstore = FAISS.from_documents(_chunks, embedder)
     return docstore
 
-@st.cache_data(ttl = 2*3600, max_entries = 5)
-def load_huberman():
-    embedder = ep.embed_type_chooser(embed_type = "o", api_key=st.secrets["openai_api_key"])
-    docstore = FAISS.load_local("./Huberman", embedder)
-    return docstore
+# @st.cache_data(ttl = 2*3600, max_entries = 5)
+# def load_huberman():
+#     embedder = ep.embed_type_chooser(embed_type = "o", api_key=st.secrets["openai_api_key"])
+#     docstore = FAISS.load_local("./Huberman", embedder)
+#     return docstore
 
 def source_cache(resp):
     sources = ep.get_sources(resp)
@@ -77,9 +77,8 @@ col1.image(logo, output_format="PNG", clamp=True, use_column_width=True)
 chat3_5, chat4 = pr.initialise_llms_with_key(st.secrets["openai_api_key"])
 
 with col2:
-    st.title("UTCC Johnny")
-    st.subheader("Study Assistant")
-    st.markdown("##### Upload your lecture notes/slides and ask your virtual professor any questions.")
+    st.title("UTCC Johnny - Study Assistant")
+    st.markdown("Upload your lecture notes/slides and ask your virtual professor any questions.")
     # st.markdown("""Use this tool to allow handwritten study materials to be analysed: <a href = "https://tools.pdf24.org/en/ocr-pdf">PDF OCR</a>""", unsafe_allow_html = True, help = "This tool is not affiliated with Memora")
     
 uploaded_files = st.file_uploader("Upload Study Materials", type = ["pdf","txt","docx"], accept_multiple_files = True, on_change = clear_cache, key = "assistant_uploads")
@@ -91,29 +90,30 @@ if 'upld_filename' in st.session_state and st.session_state.upld_filename is not
 else:
     filenames = "None"
 
-with st.sidebar:
-    model_choice = st.checkbox(":sparkle: Use GPT-4 (slower but better output)", key = "model_choice", on_change = clear_answer_cache, value = False, help = "Make sure you have access to GPT-4 API before using this option.")
-    filenames_slt = st.empty()
-    st.divider()
-    st.caption("Special Features:")
-    huberman = st.checkbox("Enable 'Chat with Dr. Huberman'", value = False, key = "huberman", help = "Enabling this will load the transcripts of 90 episodes of the Huberman Lab Podcast so you can 'ask Dr. Huberman questions'.")
-    vid = st.checkbox("LoFi music", value = False, key = "vid")
-    if vid:
-        st.video("https://youtu.be/jfKfPfyJRdk")
+# with st.sidebar:
+#     model_choice = st.checkbox("Use GPT-4o", key = "model_choice", on_change = clear_answer_cache, value = False, help = "Make sure you have access to GPT-4 API before using this option.")
+#     filenames_slt = st.empty()
+#     st.divider()
+#     st.caption("Special Features:")
+#     huberman = st.checkbox("Enable 'Chat with Dr. Huberman'", value = False, key = "huberman", help = "Enabling this will load the transcripts of 90 episodes of the Huberman Lab Podcast so you can 'ask Dr. Huberman questions'.")
+#     vid = st.checkbox("LoFi music", value = False, key = "vid")
+#     if vid:
+#         st.video("https://youtu.be/jfKfPfyJRdk")
 
-if uploaded_files or huberman:
-    if huberman:
-        st.write("Virtual Dr. Huberman enabled!")
-        docstore = load_huberman()
-    else:
-        chunks = text_process(uploaded_files)
-        if "chunks" not in st.session_state or st.session_state.chunks == [] or st.session_state.chunks is None:
-            st.session_state.chunks = chunks
-        try:
-            docstore = create_docstore(chunks)
-        except IndexError:
-            st.warning("One or more of your documents were unable to be processed. Please make sure any PDFs are searchable (**use the PDF OCR tool linked above) and try again.")
-            st.stop()
+# if uploaded_files or huberman:
+if uploaded_files :
+    # if huberman:
+    #     st.write("Virtual Dr. Huberman enabled!")
+    #     docstore = load_huberman()
+    # else:
+    chunks = text_process(uploaded_files)
+    if "chunks" not in st.session_state or st.session_state.chunks == [] or st.session_state.chunks is None:
+        st.session_state.chunks = chunks
+    try:
+        docstore = create_docstore(chunks)
+    except IndexError:
+        st.warning("One or more of your documents were unable to be processed. Please make sure any PDFs are searchable (**use the PDF OCR tool linked above) and try again.")
+        st.stop()
     st.session_state.docstore = {"filenames" : filenames, "docstore" : docstore}
 
 try:
@@ -153,8 +153,8 @@ try:
 except:
     pass
 
-st.divider()
-st.caption("*If something stops working, refresh the page twice and try again.")
+# st.divider()
+# st.caption("*If something stops working, refresh the page twice and try again.")
 
 # ------------------------------ FOOTER ------------------------------ #
 
@@ -207,4 +207,4 @@ Developed by
 
 </div>
 """
-st.write(ft, unsafe_allow_html=True)
+# st.write(ft, unsafe_allow_html=True)
