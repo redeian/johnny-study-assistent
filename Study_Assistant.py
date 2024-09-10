@@ -90,9 +90,9 @@ if 'upld_filename' in st.session_state and st.session_state.upld_filename is not
 else:
     filenames = "None"
 
-# with st.sidebar:
-#     model_choice = st.checkbox("Use GPT-4o", key = "model_choice", on_change = clear_answer_cache, value = False, help = "Make sure you have access to GPT-4 API before using this option.")
-#     filenames_slt = st.empty()
+with st.sidebar:
+    model_choice = st.checkbox("Use GPT-4o", key = "model_choice", on_change = clear_answer_cache, value = False, help = "Make sure you have access to GPT-4 API before using this option.")
+    filenames_slt = st.empty()
 #     st.divider()
 #     st.caption("Special Features:")
 #     huberman = st.checkbox("Enable 'Chat with Dr. Huberman'", value = False, key = "huberman", help = "Enabling this will load the transcripts of 90 episodes of the Huberman Lab Podcast so you can 'ask Dr. Huberman questions'.")
@@ -150,8 +150,9 @@ try:
                         st.write("Answer:", new_answer)
                     if new_answer:
                         source_box.text_area(label = "sources",value = sources, disabled = True, height = 500, label_visibility = "hidden", key = "sources_")
-except:
-    pass
+except Exception as e:
+    print(f"error {e}")
+    
 
 # st.divider()
 # st.caption("*If something stops working, refresh the page twice and try again.")

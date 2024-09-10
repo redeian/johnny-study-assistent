@@ -96,7 +96,7 @@ else:
         uploaded = True
 
 with st.sidebar:
-    model_choice = st.checkbox(":sparkle: Use GPT-4 (slower but better output)", key = "model_choice_test")
+    model_choice = st.checkbox("Use GPT-4o", key = "model_choice_test")
     st.divider()
     tts_choice = st.checkbox(":sound: Text-to-Speech", key = "tts_choice")
     random_choice = st.checkbox(":twisted_rightwards_arrows: Randomise order of Q&A", value = False, key = "random_toggle", on_change = reset_counter_func)
@@ -182,7 +182,7 @@ if uploaded:
     if 'a' in st.session_state and st.session_state.a is not None:
         if explain or (explain_q and explain_q != "" and explain_q != " "):
             st.write(f"Explanation: {regen(question = explain_q, answer = st.session_state.a)}")
-st.divider()
-st.caption("*If something stops working, refresh the page twice and try again.")
+# st.divider()
+# st.caption("*If something stops working, refresh the page twice and try again.")
 
 # ------------------------------ FOOTER ------------------------------ #
